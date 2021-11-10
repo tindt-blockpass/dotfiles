@@ -6,10 +6,12 @@ M.config = function()
     return
   end
 
-  github_theme.setup({
-    theme_style = 'light_default',
-    comment_style = "italic",
-  })
+  if lvim.colorscheme == 'github' then
+    github_theme.setup({
+      theme_style = 'light_default',
+      comment_style = "italic",
+    })
+  end
 end
 
 return M

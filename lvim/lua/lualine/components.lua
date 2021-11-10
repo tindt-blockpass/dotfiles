@@ -65,6 +65,24 @@ C.filename = {
   cond = nil,
 }
 
+C.relative_path = {
+  function()
+    local filename = vim.fn.expand "%:t"
+    local extension = vim.fn.expand "%:e"
+    local relative_path = vim.fn.fnamemodify(vim.fn.expand("%"), ":~:.")
+    local icon = require("nvim-web-devicons").get_icon(filename, extension)
+    if icon == nil then
+      icon = ""
+      return icon
+    end
+
+    return icon .. " " .. relative_path .. " "
+  end,
+  -- color = { fg = colors.green, bg = '#292e42' },
+  separator = { left = "", right = icons.slant_right_2},
+  cond = nil,
+}
+
 C.filetype = {
   "filetype",
   color = {},
@@ -149,7 +167,7 @@ M.sections = {
     components.python_env,
   },
   lualine_x = {
-    C.filename,
+    C.relative_path,
     components.diagnostics,
     components.treesitter,
     C.lsp,

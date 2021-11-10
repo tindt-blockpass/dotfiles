@@ -1,11 +1,11 @@
 local B = lvim.builtin
-local L = lvim.lang
 local statusline = require "lualine.components"
 
-B.lualine.options.theme = 'ayu_light'
+-- B.lualine.options.theme = 'ayu_light'
 B.lualine.sections = statusline.sections
 
 -- general
+lvim.colorscheme = 'rose-pine'
 lvim.format_on_save = true
 lvim.lint_on_save = true
 vim.opt.relativenumber = true
@@ -33,6 +33,7 @@ B.treesitter.highlight.enabled = true
 B.treesitter.rainbow.enable = true
 
 -- Whichkey
+B.which_key.mappings.s.s = { "<cmd>Telescope grep_string<cr>", "Search string under cursor" }
 B.which_key.mappings.l.d = { "<cmd>TroubleToggle<cr>", "Diagnostics" }
 B.which_key.mappings.l.R = { "<cmd>TroubleToggle lsp_references<cr>", "References" }
 B.which_key.mappings.l.o = { "<cmd>SymbolsOutline<cr>", "Outline" }
@@ -44,38 +45,40 @@ B.which_key.mappings['t'] = {
 }
 
 -- Language linters and formatters
-L.typescriptreact.formatters = {
+local formatters = require "lvim.lsp.null-ls.formatters"
+local linters = require "lvim.lsp.null-ls.linters"
+
+formatters.setup {
   {
-    exe = "eslint_d",
+    exe = "prettierd",
+    filetypes = { "typescript", "typescriptreact" },
   },
-  {
-    exe = "prettierd",
-  }
 }
-L.typescriptreact.linters = { { exe = "eslint_d"} }
-L.typescript.linters = { { exe = "eslint_d"} }
-L.typescript.formatters = {
-  {
-    exe = "prettierd",
-  }
-}
-L.javascript.formatters = {
-  {
-    exe = "eslint_d",
-  },
-  {
-    exe = "prettierd",
-  }
+linters.setup {
+  { exe = "eslint_d", filetypes= { "typescript", "typescriptreact"} },
 }
 vim.list_extend(lvim.lsp.override, { "rust", "tsserver" })
 local manager = require("lvim.lsp.manager")
 manager.setup("tsserver", {})
 manager.setup("rust", {})
 
+
+
 -- Additional Plugins
 lvim.plugins = {
   {"folke/tokyonight.nvim"},
-  {"rose-pine/neovim", as = "rose-pine" },
+  {
+    "rose-pine/neovim",
+    as = "rose-pine",
+    config = function ()
+      
+      if lvim.colorscheme == 'rose-pine' then
+        vim.g.rose_pine_variant = 'dawn'
+        vim.cmd('colorscheme rose-pine')
+        vim.cmd('hi IndentBlanklineChar guifg=#e4dfde')
+      end
+    end
+  },
   {"p00f/nvim-ts-rainbow"},
   { 'Saecki/crates.nvim', requires = { 'nvim-lua/plenary.nvim' } },
   {
