@@ -97,9 +97,9 @@ M.config = function ()
       }
     },
     server = {
-      on_attach = function()
-        vim.cmd([[au BufEnter,CursorHold,InsertLeave <buffer> lua vim.lsp.codelens.refresh()]])
-      end,
+      cmd = { vim.fn.stdpath "data" .. "/lsp_servers/rust/rust-analyzer" },
+      on_attach = require("lvim.lsp").common_on_attach,
+      on_init = require("lvim.lsp").common_on_init,
       settings = {
         ["rust-analyzer"] = {
           checkOnSave = {
