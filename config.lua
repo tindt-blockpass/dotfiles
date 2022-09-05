@@ -27,6 +27,8 @@ capabilities.textDocument.foldingRange = {
 lvim.leader = "space"
 lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
 lvim.keys.normal_mode["<C-P>"] = ":Telescope resume<cr>"
+lvim.keys.normal_mode["<S-l>"] = ":BufferLineCycleNext<cr>"
+lvim.keys.normal_mode["<S-h>"] = ":BufferLineCyclePrev<cr>"
 
 -- Use which-key to add extra bindings with the leader-key prefix
 lvim.builtin.which_key.mappings["t"] = {
