@@ -386,18 +386,6 @@ lvim.plugins = {
       require('crates').setup()
     end,
   },
-  {
-    'quick-lint/quick-lint-js',
-    rtp = 'plugin/vim/quick-lint-js.vim',
-    tag = '2.8.0',
-    opt = true,
-    config = function()
-      local nvim_lsp = require('lspconfig')
-      nvim_lsp.quick_lint_js.setup {
-        filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" }
-      }
-    end
-  }
   -- {
   --   'kevinhwang91/nvim-ufo',
   --   requires = 'kevinhwang91/promise-async',
