@@ -31,6 +31,7 @@ lvim.keys.normal_mode["<S-l>"] = ":BufferLineCycleNext<cr>"
 lvim.keys.normal_mode["<S-h>"] = ":BufferLineCyclePrev<cr>"
 
 -- Use which-key to add extra bindings with the leader-key prefix
+lvim.builtin.which_key.mappings.s.s = { "<cmd>Telescope grep_string<cr>", "Search string under cursor" }
 lvim.builtin.which_key.mappings["t"] = {
   name = "+Trouble",
   r = { "<cmd>Trouble lsp_references<cr>", "References" },
