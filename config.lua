@@ -146,6 +146,7 @@ local function attach_navic(client, bufnr)
 end
 
 lvim.lsp.on_attach_callback = attach_navic
+lvim.lsp.installer.setup.automatic_installation = false
 
 
 -- Language linters and formatters
