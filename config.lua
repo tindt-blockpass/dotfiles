@@ -1,6 +1,4 @@
-local p = require('rose-pine.palette')
 require("user.autocommands")
-
 local lualine_sections = require('lualine.components').sections
 
 -- general
@@ -65,7 +63,6 @@ lvim.builtin.treesitter.ensure_installed = {
   "tsx",
   "css",
   "rust",
-  "java",
   "yaml",
 }
 lvim.builtin.treesitter.ignore_install = { "haskell" }
@@ -78,7 +75,6 @@ end
 lvim.builtin.treesitter.rainbow.enable = true
 
 -- Telescope configurations
-lvim.builtin.telescope.defaults.layout_config.prompt_position = "top"
 lvim.builtin.telescope.defaults.layout_config.horizontal.preview_width = function(_, cols, _)
   if cols < 120 then
     return 0
@@ -86,10 +82,6 @@ lvim.builtin.telescope.defaults.layout_config.horizontal.preview_width = functio
   return math.floor(cols * 0.4)
 end
 
-lvim.builtin.which_key.mappings.s.s = { "<cmd>Telescope grep_string<cr>", "Search string under cursor" }
--- lvim.builtin.which_key.mappings.l.d = { "<cmd>TroubleToggle<cr>", "Diagnostics" }
--- lvim.builtin.which_key.mappings.l.R = { "<cmd>TroubleToggle lsp_references<cr>", "References" }
--- lvim.builtin.which_key.mappings.l.o = { "<cmd>SymbolsOutline<cr>", "Outline" }
 
 -- Bufferline settings
 lvim.builtin.bufferline.options.diagnostics_indicator = function(count, level)
