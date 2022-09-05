@@ -106,6 +106,7 @@ lvim.lsp.automatic_configuration.skipped_servers = {
   "csharp_ls",
   "cssmodules_ls",
   "denols",
+  -- "eslint",
   "ember",
   "emmet_ls",
   "golangci_lint_ls",
