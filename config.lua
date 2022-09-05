@@ -51,6 +51,7 @@ lvim.builtin.terminal.active = true
 lvim.builtin.nvimtree.setup.view.side = "right"
 lvim.builtin.nvimtree.setup.view.width = 40
 lvim.builtin.nvimtree.setup.renderer.icons.show.git = false
+table.insert(lvim.builtin.cmp.sources, { name = "nvim_lsp_signature_help" })
 
 -- if you don't want all the parsers change this to a table of the ones you want
 lvim.builtin.treesitter.ensure_installed = {
@@ -331,6 +332,76 @@ lvim.plugins = {
     "SmiteshP/nvim-navic",
     config = function()
       require("user.navic")
+    end
+  },
+  {
+    "nvim-treesitter/nvim-treesitter-context",
+    config = function()
+
+    end
+  },
+  {
+    "nvim-treesitter/playground",
+    config = function()
+      require "nvim-treesitter.configs".setup {
+        playground = {
+          enable = true,
+          disable = {},
+          updatetime = 25, -- Debounced time for highlighting nodes in the playground from source code
+          persist_queries = false, -- Whether the query persists across vim sessions
+          keybindings = {
+            toggle_query_editor = 'o',
+            toggle_hl_groups = 'i',
+            toggle_injected_languages = 't',
+            toggle_anonymous_nodes = 'a',
+            toggle_language_display = 'I',
+            focus_language = 'f',
+            unfocus_language = 'F',
+            update = 'R',
+            goto_node = '<cr>',
+            show_help = '?',
+          },
+        }
+      }
+    end
+  },
+  {
+    'nvim-telescope/telescope-ui-select.nvim',
+    config = function()
+      require("telescope").load_extension("ui-select")
+    end
+  },
+  {
+    "sindrets/diffview.nvim"
+  },
+  {
+    "TimUntersberger/neogit"
+  },
+  {
+    "hrsh7th/cmp-nvim-lsp-signature-help"
+  },
+  {
+    "simrat39/rust-tools.nvim",
+    config = function()
+      require("user.rust-tools").config()
+    end
+  },
+  {
+    'saecki/crates.nvim',
+    config = function()
+      require('crates').setup()
+    end,
+  },
+  {
+    'quick-lint/quick-lint-js',
+    rtp = 'plugin/vim/quick-lint-js.vim',
+    tag = '2.8.0',
+    opt = true,
+    config = function()
+      local nvim_lsp = require('lspconfig')
+      nvim_lsp.quick_lint_js.setup {
+        filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" }
+      }
     end
   }
   -- {
