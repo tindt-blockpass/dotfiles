@@ -91,7 +91,7 @@ end
 
 
 -- Lualine
-lvim.builtin.lualine.options.theme = 'rose-pine-alt'
+lvim.builtin.lualine.options.theme = 'rose-pine-dawn'
 lvim.builtin.lualine.sections = lualine_sections
 lvim.builtin.lualine.options.globalstatus = true
 lvim.builtin.lualine.options.always_divide_middle = true
