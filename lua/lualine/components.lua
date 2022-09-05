@@ -1,6 +1,21 @@
-vim.api.nvim_set_hl(0, "SLSep", { fg = "#bbc2cf", bg = "NONE" })
-vim.api.nvim_set_hl(0, "SLProgress", { fg = "#b668cd", bg = "#32363e" })
-vim.api.nvim_set_hl(0, "SLLocation", { fg = "#519fdf", bg = "#32363e" })
+local rosepine = {
+  base = '#faf4ed',
+  surface = '#fffaf3',
+  overlay = '#f2e9e1',
+  muted = '#9893a5',
+  subtle = '#797593',
+  text = '#575279',
+  love = '#b4637a',
+  gold = '#ea9d34',
+  rose = '#d7827e',
+  pine = '#286983',
+  foam = '#56949f',
+  iris = '#907aa9',
+  highlight_low = '#f4ede8',
+  highlight_med = '#dfdad9',
+  highlight_high = '#cecacd',
+  none = 'NONE',
+}
 
 local hl_str = function(str, hl)
   return "%#" .. hl .. "#" .. str .. "%*"
@@ -13,8 +28,8 @@ local C = {}
 local M = {}
 local icons = require "lualine.icons"
 local mode_color = {
-  n = "#519fdf",
-  i = "#c18a56",
+  n = "#56949f",
+  i = "#ea9d34",
   v = "#b668cd",
   [""] = "#b668cd",
   V = "#b668cd",
@@ -43,7 +58,7 @@ local left_pad = {
   end,
   padding = 0,
   color = function()
-    return { fg = "#32363e" }
+    return { fg = "#f2e9e1" }
   end,
 }
 
@@ -53,7 +68,7 @@ local right_pad = {
   end,
   padding = 0,
   color = function()
-    return { fg = "#282C34" }
+    return { fg = rosepine.surface }
   end,
 }
 
@@ -63,7 +78,7 @@ local left_pad_alt = {
   end,
   padding = 0,
   color = function()
-    return { fg = "#32363e" }
+    return { fg = "#f2e9e1" }
   end,
 }
 
@@ -73,7 +88,7 @@ local right_pad_alt = {
   end,
   padding = 0,
   color = function()
-    return { fg = "#32363e" }
+    return { fg = "#f2e9e1" }
   end,
 }
 
@@ -99,20 +114,21 @@ C.blank = {
 
 C.branch = {
   "b:gitsigns_head",
-  icon = " ",
-  -- color = { bg = '#d1d4d4',  gui = "bold" },
-  separator = { left = icons.left_rounded, right = icons.right_rounded },
+  icon = "%#LualineGitIcon#" .. " " .. "%*",
+  color = { bg = rosepine.surface, gui = "bold" },
+  -- separator = { left = "", right = icons.right_rounded },
+  padding = 0,
   cond = conditions.hide_in_width,
 }
 
 C.diff = {
   "diff",
   source = diff_source,
-  symbols = { added = " +", modified = "~", removed = "-" },
+  symbols = { added = "+", modified = "~", removed = "-" },
   diff_color = {
-    added = { fg = colors.green },
-    modified = { fg = colors.yellow },
-    removed = { fg = colors.red },
+    added = { fg = rosepine.foam },
+    modified = { fg = rosepine.gold },
+    removed = { fg = rosepine.love },
   },
   color = {},
   separator = { left = "", right = "" },
@@ -156,7 +172,7 @@ C.relative_path = {
 
     return icon .. " " .. relative_path .. " "
   end,
-  color = { fg = colors.green, bg = 'NONE' },
+  color = { fg = rosepine.foam },
   separator = { left = "", right = "" },
   cond = nil,
 }
@@ -181,55 +197,76 @@ C.filetype = {
 
 C.mode = {
   function()
-    return " " .. icons.ghost .. " TIN " .. icons.heart_outline .. " "
+    return icons.ghost .. " TIN " .. icons.heart_outline .. " "
   end,
-  padding = { left = 0, right = 0 },
+  padding = { left = 0, right = 1 },
   color = function()
     -- auto change color according to neovims mode
-    return { fg = mode_color[vim.fn.mode()], bg = "#32363e" }
+    return { fg = "#fffaf3", bg = "#d7827e" }
   end,
-  -- separator = { left = icons.left_rounded, right = icons.right_rounded },
+  separator = { left = icons.left_rounded, right = "" },
   cond = nil,
 }
 
 C.location = {
   "location",
   fmt = function(str)
-    return hl_str(" ", "SLSep") .. hl_str(str, "SLLocation") .. hl_str(" ", "SLSep")
+    return str
   end,
-  padding = 0,
+  color = { fg = rosepine.muted },
+  padding = { left = 1, right = 1 }
 }
 
 C.progress = {
   "progress",
-  colors = { fg = colors.fg, bg = '#292e42' },
+  color = { fg = rosepine.rose },
   fmt = function(str)
-    return hl_str("", "SLSep") .. hl_str("%P/%L", "SLProgress") .. hl_str(" ", "SLSep")
+    return "%P/%L"
   end,
-  padding = 0,
+  padding = { left = 1, right = 1 }
+}
+
+C.divider1 = {
+  color = { fg = rosepine.rose },
+  function()
+    return " " .. icons.rhombus .. " "
+  end,
+  padding = { left = 1, right = 0 }
+}
+
+C.divider2 = {
+  color = { fg = rosepine.muted },
+  function()
+    return " " .. icons.rhombus .. " "
+  end,
+  padding = { left = 1, right = 0 }
 }
 
 M.sections = {
   lualine_a = {
-    left_pad,
     C.mode,
+    C.branch,
     right_pad
   },
   lualine_b = {
-    C.branch,
   },
   lualine_c = {
     C.diff,
     components.python_env,
+    function()
+      return '%='
+    end,
+    C.relative_path,
   },
   lualine_x = {
-    C.relative_path,
     C.diagnostics,
   },
   lualine_y = {
+    C.divider2,
     C.location,
   },
   lualine_z = {
+    C.divider1,
     C.progress,
   },
 }
