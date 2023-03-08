@@ -112,13 +112,20 @@ C.blank = {
   cond = nil,
 }
 
+local branchRight
+
+
+
 C.branch = {
   "b:gitsigns_head",
+  -- function()
+  --   return vim.b.gitsigns_head .. "%#LualineGitIcon#" .. " " .. "%*"
+  -- end,
   icon = "%#LualineGitIcon#" .. " " .. "%*",
   color = { bg = rosepine.surface, gui = "bold" },
-  -- separator = { left = "", right = icons.right_rounded },
+  separator = { left = "", right = "" },
   padding = 0,
-  cond = conditions.hide_in_width,
+  cond = conditions.hide_in_width and vim.b.gitsigns_head,
 }
 
 C.diff = {
@@ -246,7 +253,7 @@ M.sections = {
   lualine_a = {
     C.mode,
     C.branch,
-    right_pad
+    -- right_pad
   },
   lualine_b = {
   },

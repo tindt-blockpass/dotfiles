@@ -28,7 +28,7 @@ local icons = {
   terminal = '',
   right_dragon = '',
   left_dragon = '',
-  rhombus = "ﰉ"
+  rhombus = "●"
 }
 
 return icons

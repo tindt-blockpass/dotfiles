@@ -20,17 +20,30 @@ local M = {}
 
 M.config = function()
   if lvim.colorscheme == "rose-pine" then
+    vim.o.background = 'light'
     local p = require('rose-pine.palette')
+    local h = require('rose-pine.util').highlight
 
     require('rose-pine').setup({
-      dark_variant = 'main',
-      disable_italics = false,
-
+      -- dark_variant = 'main',
+      disable_italics = true,
       -- Change specific vim highlight groups
       highlight_groups = {
-        TSParameter = { fg = p.iris },
-        TSProperty = { fg = p.iris },
-        TSVariable = { fg = p.text },
+        h('Variable', { fg = p.text, italic = false }),
+        h('Type', { fg = p.foam, italic = false }),
+        h('@parameter', { fg = p.iris, italic = false }),
+        h('@property', { fg = p.iris, italic = false }),
+        h('@variable', { fg = p.text, italic = false }),
+        h('@type', { link = 'Type' }),
+        h('Comment', { fg = p.muted, italic = true }),
+        h('@comment', { link = 'Comment' }),
+
+        Property = { fg = p.iris, italic = false },
+        Type = { fg = p.foam, italic = false },
+        Variable = { fg = p.text, italic = false },
+        Parameter = { fg = p.iris, italic = false },
+        Comment = { fg = p.muted, italic = true },
+
         IndentBlanklineChar = { fg = '#e4dfde' },
         NavicIconsFile = { fg = p.iris, bg = "NONE" },
         NavicIconsModule = { fg = p.iris, bg = "NONE" },
@@ -46,12 +59,12 @@ M.config = function()
         NavicIconsFunction = { fg = p.iris, bg = "NONE" },
         NavicIconsVariable = { fg = p.rose, bg = "NONE" },
         NavicIconsConstant = { fg = p.love, bg = "NONE" },
-        NavicIconsString = { fg = p.foam, style = "italic", bg = "NONE" },
+        NavicIconsString = { fg = p.foam, italic = true, bg = "NONE" },
         NavicIconsNumber = { fg = p.rose, bg = "NONE" },
         NavicIconsBoolean = { fg = p.love, bg = "NONE" },
         NavicIconsArray = { fg = p.rose, bg = "NONE" },
         NavicIconsObject = { fg = p.rose, bg = "NONE" },
-        NavicIconsKey = { fg = p.rose, style = "italic", bg = "NONE" },
+        NavicIconsKey = { fg = p.rose, italic = true, bg = "NONE" },
         NavicIconsNull = { fg = p.love, bg = "NONE" },
         NavicIconsEnumMember = { fg = p.rose, bg = "NONE" },
         NavicIconsStruct = { fg = p.iris, bg = "NONE" },
@@ -65,6 +78,8 @@ M.config = function()
     })
 
     vim.cmd('colorscheme rose-pine')
+    vim.cmd('set background=light')
+    lvim.colorscheme = 'rose-pine'
   end
 end
 
